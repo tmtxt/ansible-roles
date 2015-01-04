@@ -1,0 +1,4 @@
+---
+- name: create project user
+  user: name={{project_user}}
+  sudo: yes
