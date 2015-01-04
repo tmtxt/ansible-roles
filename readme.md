@@ -26,3 +26,7 @@ In your ansible file, just include the roles you need to use for your host, for 
 Each role comes with several default variables. You may want to override role's
 default variables in group_vars or host_vars, see the read me of each role for
 more detail.
+
+# Example with Vagrant
+
+- Expressjs skeleton: [https://github.com/tmtxt/expressjs-skeleton](https://github.com/tmtxt/expressjs-skeleton)
