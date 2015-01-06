@@ -1,0 +1,8 @@
+---
+- name: install pip
+  sudo: yes
+  apt: name=python-pip
+
+- name: install virtualenv
+  sudo: yes
+  pip: name=virtualenv
