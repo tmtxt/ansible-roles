@@ -1,4 +1,6 @@
 ---
+postgres_version: 9.3
+
 db_name: example
 db_user: example
 db_password: example
