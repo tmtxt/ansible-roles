@@ -27,7 +27,7 @@
   sudo_user: "{{project_user}}"
   template: src=pg_env.sh.j2 dest=~/pg_env.sh mode=755 owner={{project_user}}
 
-  # alternative open the access for outside if running inside vagrant
+  # optionally open the access for outside if running inside vagrant
 - name: open pg outside access
   sudo: yes
   lineinfile: >-
@@ -39,3 +39,8 @@
   when: vagrant_env is defined and vagrant_env == true
   notify:
     - restart postgres
+
+    # optionally generate db.json config for schemup
+- name: generate db.json config
+  when: db_config_path is defined
+  template: src=db.json.j2 dest={{db_config_path}}/db.json
