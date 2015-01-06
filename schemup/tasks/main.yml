@@ -1,0 +1,22 @@
+---
+- name: install python-dev
+  sudo: yes
+  apt: name=python-dev
+
+- name: create schemup virtualenv
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  command: virtualenv schemup-env
+  args:
+    chdir: ~/
+    creates: ~/schemup-env
+
+- name: copy schemup requirements file to server
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  copy: src=requirements.txt dest=~/schemup-requirements.txt
+
+- name: install schemup requirements
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  pip: requirements=~/schemup-requirements.txt virtualenv=~/schemup-env
