@@ -1,0 +1,4 @@
+---
+- name: install open jdk
+  sudo: yes
+  apt: name=openjdk-7-jdk
