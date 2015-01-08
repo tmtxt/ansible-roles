@@ -41,6 +41,14 @@
     - restart postgres
 
     # optionally generate db.json config for schemup
+- name: create config directory
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  when: db_config_path is defined
+  file: path={{db_config_path}} state=directory
+
 - name: generate db.json config
+  sudo: yes
+  sudo_user: "{{project_user}}"
   when: db_config_path is defined
   template: src=db.json.j2 dest={{db_config_path}}/db.json
