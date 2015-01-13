@@ -1,0 +1,13 @@
+---
+# tasks file for ansible
+- name: install software-properties-common
+  sudo: yes
+  apt: name=software-properties-common
+
+- name: add ansible apt source
+  sudo: yes
+  apt_repository: repo=ppa:ansible/ansible
+
+- name: install ansible
+  sudo: yes
+  apt: name=ansible
