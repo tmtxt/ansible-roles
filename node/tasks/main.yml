@@ -15,18 +15,27 @@
     dest=~/.profile
     line=". ~/.nvm/nvm.sh"
 
+- name: check current user shell
+  sudo: yes
+  command: sudo -iu {{project_user}} echo $SHELL
+  register: node_user_shell
+  changed_when: false
+
+- name: change user shell to bash
+  sudo: yes
+  user: name={{project_user}} shell=/bin/bash
+
 - name: install nodejs using nvm
+  sudo: yes
+  sudo_user: "{{project_user}}"
   command: sudo -iu {{project_user}} nvm install {{node_version}}
   register: nvm_install_result
   changed_when: nvm_install_result.stdout.find('is already installed.') != -1
 
-# - name: check node {{node_version}} is the default version
-#   shell: sudo -iu {{user_name}} nvm ls | grep -e 'default -> {{node_version}}'
-#   register: nvm_check_default
-#   changed_when: False
-#   ignore_errors: True
-
 - name: set default nodejs version
   command: sudo -iu {{project_user}} nvm alias default {{node_version}}
   changed_when: False
-  # when: nvm_check_default|failed
+
+- name: change back to user default shell
+  sudo: yes
+  user: name={{project_user}} shell={{node_user_shell.stdout}}
