@@ -1,0 +1,9 @@
+---
+# tasks file for emacs
+- name: add emacs24 apt source
+  sudo: yes
+  apt_repository: repo=ppa:cassou/emacs
+
+- name: install emacs24
+  sudo: yes
+  apt: name=emacs24

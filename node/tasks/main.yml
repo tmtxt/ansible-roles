@@ -19,11 +19,12 @@
   sudo: yes
   command: sudo -iu {{project_user}} echo $SHELL
   register: node_user_shell
-  changed_when: false
+  changed_when: False
 
 - name: change user shell to bash
   sudo: yes
   user: name={{project_user}} shell=/bin/bash
+  changed_when: False
 
 - name: install nodejs using nvm
   sudo: yes
@@ -39,3 +40,4 @@
 - name: change back to user default shell
   sudo: yes
   user: name={{project_user}} shell={{node_user_shell.stdout}}
+  changed_when: False
