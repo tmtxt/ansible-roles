@@ -28,7 +28,6 @@
 
 - name: install nodejs using nvm
   sudo: yes
-  sudo_user: "{{project_user}}"
   command: sudo -iu {{project_user}} nvm install {{node_version}}
   register: nvm_install_result
   changed_when: nvm_install_result.stdout.find('is already installed.') != -1
