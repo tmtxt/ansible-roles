@@ -23,6 +23,17 @@
     line="source ~/.nvm/nvm.sh"
   tags: nvm
 
+- name: check current user shell
+  sudo: yes
+  command: sudo -iu {{project_user}} echo $SHELL
+  register: node_user_shell
+  changed_when: False
+
+- name: change user shell to bash
+  sudo: yes
+  user: name={{project_user}} shell=/bin/bash
+  changed_when: False
+
 - name: Install {{ nvm.node_version }}
   command: sudo -iu {{ nvm.user }} nvm install {{ nvm.node_version }}
   register: nvm_install_result
@@ -40,3 +51,8 @@
   command: sudo -iu {{ nvm.user }} nvm alias default {{ nvm.node_version }}
   when: nvm_check_default|failed
   tags: nvm
+
+- name: change back to user default shell
+  sudo: yes
+  user: name={{project_user}} shell={{node_user_shell.stdout}}
+  changed_when: False
