@@ -1,0 +1,5 @@
+---
+# tasks file for zsh
+- name: install zsh
+  sudo: yes
+  apt: name=zsh
