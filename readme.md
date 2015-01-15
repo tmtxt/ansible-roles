@@ -29,4 +29,4 @@ more detail.
 
 # Example with Vagrant
 
-- Expressjs skeleton: [https://github.com/tmtxt/expressjs-skeleton](https://github.com/tmtxt/expressjs-skeleton)
+- Clojure web skeleton: [https://github.com/tmtxt/clojure-web-skeleton](https://github.com/tmtxt/clojure-web-skeleton)
