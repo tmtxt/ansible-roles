@@ -40,15 +40,17 @@
   notify:
     - restart postgres
 
+################################################################################
+# schemup support
 # optionally generate db.json config for schemup
 - name: create schemup config directory
   sudo: yes
   sudo_user: "{{project_user}}"
-  when: db_config_path is defined
-  file: path={{db_config_path}} state=directory
+  when: db_schemup == True and db_schemup_path is defined
+  file: path={{db_schemup_path}} state=directory
 
-- name: generate db.json config
+- name: generate schemup db config file
   sudo: yes
   sudo_user: "{{project_user}}"
-  when: db_config_path is defined
-  template: src=db.json dest={{db_config_path}}/db.json
+  when: db_schemup == True and db_schemup_path is defined
+  template: src=db.json dest={{db_schemup_path}}/db.json
