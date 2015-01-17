@@ -34,10 +34,15 @@
   user: name={{nvm.user}} shell=/bin/bash
   changed_when: False
 
+- name: check installed node version
+  command: sudo -iu {{nvm.user}} nvm ls
+  register: nvm_install_result
+  changed_when: False
+  ignore_errors: True
+
 - name: Install {{ nvm.node_version }}
   command: sudo -iu {{ nvm.user }} nvm install {{ nvm.node_version }}
-  register: nvm_install_result
-  changed_when: "'is already installed.' not in nvm_install_result.stdout"
+  when: nvm_install_result|failed or nvm_install_result.stdout.find('{{nvm.node_version}}') == -1
   tags: nvm
 
 - name: Check if {{ nvm.node_version }} is the default node version
