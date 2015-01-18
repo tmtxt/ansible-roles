@@ -1,4 +1,16 @@
 ---
+- name: create schemup config directory
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  when: db_schemup_path is defined
+  file: path={{db_schemup_path}} state=directory
+
+- name: generate schemup db config file
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  when: db_schemup_path is defined
+  template: src=db.json dest={{db_schemup_path}}/db.json
+
 - name: install python-dev
   sudo: yes
   apt: name=python-dev
@@ -6,10 +18,10 @@
 - name: create schemup virtualenv
   sudo: yes
   sudo_user: "{{project_user}}"
-  command: virtualenv schemup-env
+  command: virtualenv env
   args:
     chdir: ~/
-    creates: ~/schemup-env
+    creates: ~/env
 
 - name: copy schemup requirements file to server
   sudo: yes
@@ -19,4 +31,12 @@
 - name: install schemup requirements
   sudo: yes
   sudo_user: "{{project_user}}"
-  pip: requirements=~/schemup-requirements.txt virtualenv=~/schemup-env
+  pip: requirements=~/schemup-requirements.txt virtualenv=~/env
+
+- name: run schemup
+  sudo: yes
+  sudo_user: "{{project_user}}"
+  when: db_schemup_path is defined
+  command: ~/env/bin/schemup commit
+  args:
+    chdir: "{{db_schemup_path}}"
