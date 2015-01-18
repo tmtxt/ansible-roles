@@ -33,7 +33,8 @@
 
 - name: check current user shell
   sudo: yes
-  command: sudo -iu {{nvm.user}} echo $SHELL
+  sudo_user: "{{nvm.user}}"
+  command: echo $SHELL
   register: node_user_shell
   changed_when: False
 
