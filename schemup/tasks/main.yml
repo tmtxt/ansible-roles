@@ -2,13 +2,13 @@
 - name: create schemup config directory
   sudo: yes
   sudo_user: "{{schemup_user}}"
-  when: db_schemup_path is defined
+  when: schemup_path is defined
   file: path={{schemup_path}} state=directory
 
 - name: generate schemup db config file
   sudo: yes
   sudo_user: "{{schemup_user}}"
-  when: db_schemup_path is defined
+  when: schemup_path is defined
   template: src=db.json dest={{schemup_path}}/db.json
 
 - name: install python-dev
@@ -36,7 +36,7 @@
 - name: run schemup
   sudo: yes
   sudo_user: "{{schemup_user}}"
-  when: db_schemup_path is defined
+  when: schemup_path is defined
   command: ~/env/bin/schemup commit
   args:
     chdir: "{{schemup_path}}"
