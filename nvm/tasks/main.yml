@@ -19,7 +19,7 @@
 - name: install nvm
   sudo: yes
   sudo_user: "{{ nvm.user }}"
-  git: repo=https://github.com/creationix/nvm.git dest=~/.nvm version={{ nvm.version }}
+  git: repo=https://github.com/creationix/nvm.git dest=~/.nvm
   when: not nvm_path.stat.exists
   tags: nvm
 
