@@ -39,18 +39,3 @@
   when: vagrant_env is defined and vagrant_env == true
   notify:
     - restart postgres
-
-################################################################################
-# schemup support
-# optionally generate db.json config for schemup
-- name: create schemup config directory
-  sudo: yes
-  sudo_user: "{{project_user}}"
-  when: db_schemup == True and db_schemup_path is defined
-  file: path={{db_schemup_path}} state=directory
-
-- name: generate schemup db config file
-  sudo: yes
-  sudo_user: "{{project_user}}"
-  when: db_schemup == True and db_schemup_path is defined
-  template: src=db.json dest={{db_schemup_path}}/db.json
