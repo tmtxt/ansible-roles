@@ -1,31 +1,30 @@
 ---
 - name: install nvm dependencies
   sudo: yes
-  apt: pkg={{ item }} update_cache=yes cache_valid_time=3600
+  apt: pkg={{ item }}
   with_items:
     - git
     - curl
     - build-essential
     - libssl-dev
-  tags: nvm
 
 - name: check if nvm installed
   sudo: yes
-  sudo_user: "{{nvm.user}}"
+  sudo_user: "{{nvm_user}}"
   stat: path=~/.nvm
   register: nvm_path
   changed_when: False
 
 - name: install nvm
   sudo: yes
-  sudo_user: "{{ nvm.user }}"
+  sudo_user: "{{nvm_user}}"
   git: repo=https://github.com/creationix/nvm.git dest=~/.nvm
   when: not nvm_path.stat.exists
   tags: nvm
 
 - name: source nvm in ~/.profile
   sudo: yes
-  sudo_user: "{{ nvm.user }}"
+  sudo_user: "{{nvm_user}}"
   lineinfile: >
     dest=~/.profile
     line="source ~/.nvm/nvm.sh"
@@ -33,40 +32,40 @@
 
 - name: check current user shell
   sudo: yes
-  sudo_user: "{{nvm.user}}"
-  shell: "getent passwd {{nvm.user}} | cut -d: -f7"
+  sudo_user: "{{nvm_user}}"
+  shell: "getent passwd {{nvm_user}} | cut -d: -f7"
   register: node_user_shell
   changed_when: False
 
 - name: change user shell to bash
   sudo: yes
-  user: name={{nvm.user}} shell=/bin/bash
+  user: name={{nvm_user}} shell=/bin/bash
   changed_when: False
 
 - name: check installed node version
-  command: sudo -iu {{nvm.user}} nvm ls
+  command: sudo -iu {{nvm_user}} nvm ls
   register: nvm_install_result
   changed_when: False
   ignore_errors: True
 
 - name: install nodejs using nvm
-  command: sudo -iu {{ nvm.user }} nvm install {{ nvm.node_version }}
-  when: nvm_install_result|failed or nvm_install_result.stdout.find('{{nvm.node_version}}') == -1
+  command: sudo -iu {{nvm_user}} nvm install {{ nvm_node_version }}
+  when: nvm_install_result|failed or nvm_install_result.stdout.find('{{nvm_node_version}}') == -1
   tags: nvm
 
 - name: check the default nodejs version
-  shell: sudo -iu {{ nvm.user }} nvm ls | grep -e 'default -> {{ nvm.node_version }}'
+  shell: sudo -iu {{nvm_user}} nvm ls | grep -e 'default -> {{nvm_node_version}}'
   register: nvm_check_default
   changed_when: False
   ignore_errors: True
   tags: nvm
 
 - name: set default node version
-  command: sudo -iu {{ nvm.user }} nvm alias default {{ nvm.node_version }}
+  command: sudo -iu {{nvm_user}} nvm alias default {{nvm_node_version}}
   when: nvm_check_default|failed
   tags: nvm
 
 - name: change back to user default shell
   sudo: yes
-  user: name={{nvm.user}} shell={{node_user_shell.stdout}}
+  user: name={{nvm_user}} shell={{node_user_shell.stdout}}
   changed_when: False
