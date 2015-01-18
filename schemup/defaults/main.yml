@@ -1,0 +1,4 @@
+---
+schemup_user: "{{remote_user}}"
+schemup_path: "~/"
+
