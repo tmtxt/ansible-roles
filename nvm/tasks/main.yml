@@ -34,7 +34,7 @@
 - name: check current user shell
   sudo: yes
   sudo_user: "{{nvm.user}}"
-  command: echo $SHELL
+  shell: "getent passwd {{nvm.user}} | cut -d: -f7"
   register: node_user_shell
   changed_when: False
 
