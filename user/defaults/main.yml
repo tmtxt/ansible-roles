@@ -1,2 +1,2 @@
 ---
-project_user: example
+project_user: "{{remote_user}}"
