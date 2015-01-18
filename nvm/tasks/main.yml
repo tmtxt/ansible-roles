@@ -9,10 +9,18 @@
     - libssl-dev
   tags: nvm
 
+- name: check if nvm installed
+  sudo: yes
+  sudo_user: "{{nvm.user}}"
+  stat: path=~/.nvm
+  register: nvm_path
+  changed_when: False
+
 - name: Install nvm
   sudo: yes
   sudo_user: "{{ nvm.user }}"
   git: repo=https://github.com/creationix/nvm.git dest=~/.nvm version={{ nvm.version }}
+  when: not nvm_path.stat.exists
   tags: nvm
 
 - name: Source nvm in ~/.profile
