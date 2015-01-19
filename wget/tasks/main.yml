@@ -1,0 +1,5 @@
+---
+# tasks file for wget
+- name: install wget
+  sudo: yes
+  apt: name=wget
