@@ -30,42 +30,25 @@
     line="source ~/.nvm/nvm.sh"
   tags: nvm
 
-- name: check current user shell
-  sudo: yes
-  sudo_user: "{{nvm_user}}"
-  shell: "getent passwd {{nvm_user}} | cut -d: -f7"
-  register: node_user_shell
-  changed_when: False
-
-- name: change user shell to bash
-  sudo: yes
-  user: name={{nvm_user}} shell=/bin/bash
-  changed_when: False
-
 - name: check installed node version
-  command: sudo -iu {{nvm_user}} nvm ls
+  command: sudo -iu {{nvm_user}} bash -c '. ~/.nvm/nvm.sh; nvm ls'
   register: nvm_install_result
   changed_when: False
   ignore_errors: True
 
 - name: install nodejs using nvm
-  command: sudo -iu {{nvm_user}} nvm install {{ nvm_node_version }}
+  command: sudo -iu {{nvm_user}} bash -c '. ~/.nvm/nvm.sh; nvm install {{ nvm_node_version }}'
   when: nvm_install_result|failed or nvm_install_result.stdout.find('{{nvm_node_version}}') == -1
   tags: nvm
 
 - name: check the default nodejs version
-  shell: sudo -iu {{nvm_user}} nvm ls | grep -e 'default -> {{nvm_node_version}}'
+  command: sudo -iu {{nvm_user}} bash -c '. ~/.nvm/nvm.sh; nvm ls | grep -e "default -> {{nvm_node_version}}"'
   register: nvm_check_default
   changed_when: False
   ignore_errors: True
   tags: nvm
 
 - name: set default node version
-  command: sudo -iu {{nvm_user}} nvm alias default {{nvm_node_version}}
+  command: sudo -iu {{nvm_user}} bash -c '. ~/.nvm/nvm.sh; nvm alias default {{nvm_node_version}}'
   when: nvm_check_default|failed
   tags: nvm
-
-- name: change back to user default shell
-  sudo: yes
-  user: name={{nvm_user}} shell={{node_user_shell.stdout}}
-  changed_when: False
