@@ -1,4 +1,5 @@
 ---
 schemup_user: "{{remote_user}}"
 schemup_path: "~/"
-
+virtualenv_user: "{{remote_user}}"
+virtualenv_path: "~/"

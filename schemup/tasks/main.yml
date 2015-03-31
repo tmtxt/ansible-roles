@@ -15,13 +15,13 @@
   sudo: yes
   apt: name=python-dev
 
-# - name: create schemup virtualenv
-#   sudo: yes
-#   sudo_user: "{{schemup_user}}"
-#   command: virtualenv env
-#   args:
-#     chdir: ~/
-#     creates: ~/env
+- name: create virtualenv if not exist
+  sudo: yes
+  sudo_user: "{{schemup_user}}"
+  command: virtualenv env
+  args:
+    chdir: "{{virtualenv_path}}"
+    creates: "{{virtualenv_path}}/env"
 
 - name: copy schemup requirements file to server
   sudo: yes
