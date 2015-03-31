@@ -12,5 +12,5 @@
   sudo_user: "{{virtualenv_user}}"
   command: virtualenv env
   args:
-    chdir: "{{virtualenv_path}}"
+    chdir: "{{virtualenv_path}}/"
     creates: "{{virtualenv_path}}/env"
