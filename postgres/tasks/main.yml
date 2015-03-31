@@ -22,10 +22,19 @@
   sudo_user: postgres
   postgresql_user: name={{db_user}} role_attr_flags=NOSUPERUSER,NOCREATEDB
 
+- name: create script folder if not exist
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  file: path={{script_dir}} state=directory
+
 - name: create pg env script
   sudo: yes
-  sudo_user: "{{project_user}}"
-  template: src=pg_env.sh.j2 dest=~/pg_env.sh mode=755 owner={{project_user}}
+  sudo_user: "{{db_user}}"
+  template: >-
+    src=pg_env.sh.j2
+    dest={{script_dir}}/pg_env.sh
+    mode=755
+    owner={{db_user}}
 
   # optionally open the access for outside if running inside vagrant
 - name: open pg outside access

@@ -5,3 +5,5 @@ db_name: "{{remote_user}}"
 db_user: "{{remote_user}}"
 db_password: example
 db_host: localhost
+
+script_dir: ~/scripts
