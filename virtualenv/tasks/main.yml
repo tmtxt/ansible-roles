@@ -6,3 +6,11 @@
 - name: install virtualenv
   sudo: yes
   pip: name=virtualenv
+
+- name: create virtualenv
+  sudo: yes
+  sudo_user: "{{virtualenv_user}}"
+  command: virtualenv env
+  args:
+    chdir: "{{virtualenv_path}}"
+    creates: "{{virtualenv_path}}/env"
