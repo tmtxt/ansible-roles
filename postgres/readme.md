@@ -8,3 +8,4 @@ Required variables (defaults already defined)
 - db_name
 - db_user
 - db_password
+- script_dir: the directory to output the postgres env script, default to ~/scripts
