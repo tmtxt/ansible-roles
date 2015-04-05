@@ -4,8 +4,11 @@
   sudo: yes
   sudo_user: "{{rvm_user}}"
   command: gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  changed_when: False
 
 - name: install rvm for project user
   sudo: yes
   sudo_user: "{{rvm_user}}"
   shell: "curl -sSL https://get.rvm.io | bash -s stable"
+  args:
+    creates: ~/.rvm
