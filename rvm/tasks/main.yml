@@ -44,3 +44,7 @@
   command: sudo -iu {{rvm_user}} bash -c '. ~/.rvm/scripts/rvm; rvm install {{rvm_ruby_version}}'
   register: rvm_install_result
   changed_when: rvm_install_result.stderr.find('Already') == -1
+
+- name: set default ruby version
+  command: sudo -iu {{rvm_user}} bash -c '. ~/.rvm/scripts/rvm; rvm use {{rvm_ruby_version}} --default'
+  changed_when: False
