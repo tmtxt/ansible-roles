@@ -12,3 +12,8 @@
   shell: "curl -sSL https://get.rvm.io | bash -s stable"
   args:
     creates: ~/.rvm
+
+- name: install ruby
+  command: sudo -iu {{rvm_user}} bash -c '. ~/.rvm/scripts/rvm; rvm install {{rvm_ruby_version}}'
+  register: rvm_install_result
+  changed_when: rvm_install_result.stdout.find('Already installed ruby-{{rvm_ruby_version}}.')

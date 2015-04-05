@@ -1,3 +1,4 @@
 ---
 # defaults file for rvm
 rvm_user: "{{remote_user}}"
+rvm_ruby_version: 2.1.4
