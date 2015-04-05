@@ -1,0 +1,8 @@
+---
+# tasks file for gpg
+- name: install gnupg
+  apt: name={{item}}
+  sudo: yes
+  with_items:
+    - gpa
+    - seahorse
