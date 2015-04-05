@@ -1,2 +1,6 @@
 ---
 # tasks file for rvm
+- name: install rvm for project user
+  sudo: yes
+  sudo_user: "{{rvm_user}}"
+  command: \curl -sSL https://get.rvm.io | bash -s -- --ignore-dotfiles
