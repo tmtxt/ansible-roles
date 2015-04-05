@@ -1,5 +1,32 @@
 ---
 # tasks file for rvm
+- name: install rvm dependencies
+  sudo: yes
+  apt: name={{item}}
+  with_items:
+    - build-essential
+    - libreadline6
+    - libreadline6-dev
+    - zlib1g
+    - zlib1g-dev
+    - libssl-dev
+    - libyaml-dev
+    - libsqlite3-0
+    - libsqlite3-dev
+    - sqlite3
+    - libxml2-dev
+    - libxslt-dev
+    - autoconf
+    - libc6-dev
+    - ncurses-dev
+    - automake
+    - libtool
+    - bison
+    - subversion
+    - libgdbm-dev
+    - pkg-config
+    - libffi-dev
+
 - name: install mpapis public key
   sudo: yes
   sudo_user: "{{rvm_user}}"
@@ -9,11 +36,11 @@
 - name: install rvm for project user
   sudo: yes
   sudo_user: "{{rvm_user}}"
-  shell: "curl -sSL https://get.rvm.io | bash -s stable"
+  shell: "curl -sSL https://get.rvm.io | bash -s stable --autolibs=read-fail"
   args:
     creates: ~/.rvm
 
 - name: install ruby
   command: sudo -iu {{rvm_user}} bash -c '. ~/.rvm/scripts/rvm; rvm install {{rvm_ruby_version}}'
   register: rvm_install_result
-  changed_when: rvm_install_result.stdout.find('Already installed ruby-{{rvm_ruby_version}}.')
+  changed_when: rvm_install_result.stderr.find('Already') == -1
