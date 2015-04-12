@@ -2,9 +2,9 @@
 - name: start postgres docker container
   docker:
     name: some-postgres
-    image: postgres:9.4.1
+    image: "postgres:{{pg_docker_version}}"
     state: restarted
     ports:
-      - "54321:5432"
+      - "{{pg_docker_port}}:5432"
     env:
-      POSTGRES_PASSWORD: 123456
+      POSTGRES_PASSWORD: "{{pg_docker_password}}"
