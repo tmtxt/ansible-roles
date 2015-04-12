@@ -1,0 +1,4 @@
+---
+- name: install postgres client
+  sudo: yes
+  apt: name=postgresql-client
