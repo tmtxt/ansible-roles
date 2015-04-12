@@ -1,7 +1,7 @@
 ---
 - name: start postgres docker container
   docker:
-    name: some-postgres
+    name: "{{pg_docker_container_name}}"
     image: "postgres:{{pg_docker_version}}"
     state: restarted
     ports:

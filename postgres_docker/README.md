@@ -1,38 +1,19 @@
-Role Name
-=========
+# Install and start a PostgreSQL docker container
 
-A brief description of the role goes here.
+# Requirements
 
-Requirements
-------------
+- docker_ubuntu role (for installing docker)
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+# Variables
 
-Role Variables
---------------
+Override these variables if needed
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+- **pg_docker_container_name**: postgresql docker container name, default is
+`default-postgres`
+- **pg_docker_version**: the postgresql version running inside the docker
+container, default to `9.4.1`
+- **pg_docker_port**: the port on host machine to map to the postgres' default
+port 5432 inside the container, default to `54321` (0.0.0.0:54321->5432)
+- **pg_docker_password**: database password for authentication, default to
+`123456`
+- **script_dir**: the directory to generate the pg_env script
