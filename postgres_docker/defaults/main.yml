@@ -3,3 +3,5 @@ pg_docker_container_name: default-postgres
 pg_docker_version: 9.4.1
 pg_docker_port: 54321
 pg_docker_password: 123456
+
+script_dir: ~/scripts

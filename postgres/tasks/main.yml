@@ -31,7 +31,7 @@
   sudo: yes
   sudo_user: "{{db_user}}"
   template: >-
-    src=pg_env.sh.j2
+    src=pg_env.sh
     dest={{script_dir}}/pg_env.sh
     mode=755
     owner={{db_user}}
