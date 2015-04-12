@@ -1,2 +1,21 @@
 ---
-# tasks file for schemup_docker
+- name: create schemup config directory
+  when: schemup_path is defined
+  file: path={{schemup_path}} state=directory
+
+- name: generate schemup db config file
+  sudo: yes
+  sudo_user: "{{schemup_user}}"
+  when: schemup_path is defined
+  template: src=db.json dest={{schemup_path}}/db.json
+
+- name: start schemup docker container
+  docker:
+    name: test-schemup
+    image: tmtxt/schemup:latest
+    state: started
+    command: /bin/bash -c "cd /schemup; schemup commit"
+    links:
+      - "compojure-skeleton-postgres:db"
+    volumes:
+      - "{{schemup_path}}:/schemup:ro"
