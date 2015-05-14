@@ -1,5 +1,5 @@
 ---
-postgres_version: 9.3
+postgres_version: 9.4
 
 db_name: "{{remote_user}}"
 db_user: "{{remote_user}}"
