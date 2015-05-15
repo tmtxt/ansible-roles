@@ -1,2 +1,7 @@
 ---
-# tasks file for neo4j
+- name: install neo4j dependencies
+  sudo: yes
+  apt: name={{ item }} state=present update_cache=yes force=yes
+  with_items:
+    - python-urllib3
+    - libpython-stdlib
