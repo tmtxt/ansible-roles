@@ -1,7 +1,22 @@
 ---
+# for pg 9.4
+- name: create postgres apt source list file
+  sudo: yes
+  template: >-
+    src=pgdg.list
+    dest=/etc/apt/sources.list.d/pgdg.list
+
+- name: download apt key for pgdg
+  sudo: yes
+  get_url: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc dest=/tmp/ACCC4CF8.asc
+
+- name: add apt key for postgres source
+  sudo: yes
+  apt_key: id=ACCC4CF8 url=file:///tmp/ACCC4CF8.asc state=present
+
 - name: install postgres
   sudo: yes
-  action: apt name={{item}}
+  action: apt name={{item}} update_cache=yes
   with_items:
     - postgresql-{{postgres_version}}
     - libpq-dev
