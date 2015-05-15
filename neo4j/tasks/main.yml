@@ -5,3 +5,39 @@
   with_items:
     - python-urllib3
     - libpython-stdlib
+
+- name: check if neo4j is already installed
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  stat: path={{neo4j_path}}
+  register: neo4j_path_stat
+  changed_when: False
+
+- name: download neo4j community version
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  when: not neo4j_path_stat.stat.exists
+  get_url: >-
+    url=http://dist.neo4j.org/neo4j-community-{{ neo4j_version }}-unix.tar.gz
+    dest=/tmp/neo4j-community-{{ neo4j_version }}-unix.tar.gz
+
+- name: create neo4j folder if not exist
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  when: not neo4j_path_stat.stat.exists
+  file: path={{neo4j_path}} state=directory
+
+- name: extract neo4j
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  when: not neo4j_path_stat.stat.exists
+  unarchive: >-
+    src=/tmp/neo4j-community-{{ neo4j_version }}-unix.tar.gz
+    dest={{neo4j_path}}
+    copy=no
+
+- name: delete neo4j archive file
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  when: not neo4j_path_stat.stat.exists
+  file: path=/tmp/neo4j-community-{{ neo4j_version }}-unix.tar.gz state=absent
