@@ -66,9 +66,9 @@
   when: not neo4j_path_stat.stat.exists
   file: path=/tmp/neo4j-community-{{ neo4j_version }}-unix.tar.gz state=absent
 
-- name: set neo4j port
+- name: generate config file for neo4j
   sudo: yes
   sudo_user: "{{neo4j_user}}"
-  lineinfile: >-
+  template: >-
+    src=neo4j-server.properties
     dest={{neo4j_path}}/neo4j-community-{{neo4j_version}}/conf/neo4j-server.properties
-    line="org.neo4j.server.webserver.port={{neo4j_port}}"
