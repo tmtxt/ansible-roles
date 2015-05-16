@@ -6,6 +6,30 @@
     - python-urllib3
     - libpython-stdlib
 
+- name: Change Soft Open File Limit
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/security/limits.conf
+    insertbefore="^# End of file$"
+    line="{{neo4j_user}} soft nofile 40000"
+    state=present
+
+- name: Change Hard Open File Limit
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/security/limits.conf
+    insertbefore="^# End of file$"
+    line="{{neo4j_user}} hard nofile 40000"
+    state=present
+
+- name: Change Hard Open File Limit
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/pam.d/su
+    insertafter="^# session required pam_limits.so$"
+    line="session required pam_limits.so"
+    state=present
+
 - name: check if neo4j is already installed
   sudo: yes
   sudo_user: "{{neo4j_user}}"
@@ -41,3 +65,10 @@
   sudo_user: "{{neo4j_user}}"
   when: not neo4j_path_stat.stat.exists
   file: path=/tmp/neo4j-community-{{ neo4j_version }}-unix.tar.gz state=absent
+
+- name: set neo4j port
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  lineinfile: >-
+    dest={{neo4j_path}}/neo4j-community-{{neo4j_version}}/conf/neo4j-server.properties
+    line="org.neo4j.server.webserver.port={{neo4j_port}}"
