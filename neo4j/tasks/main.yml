@@ -86,3 +86,8 @@
     dest={{neo4j_path}}/neo4j-community-{{neo4j_version}}/conf/neo4j-server.properties
   notify:
     - restart neo4j server
+
+- name: generate base64 string for default password
+  shell: echo -n "neo4j:123456" | base64
+  register: neo4j_default_password
+  changed_when: False
