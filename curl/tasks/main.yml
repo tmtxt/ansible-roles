@@ -1,0 +1,5 @@
+---
+- name: install curl
+  sudo: yes
+  apt: name=curl
+
