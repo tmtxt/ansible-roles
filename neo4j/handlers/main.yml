@@ -1,8 +1,1 @@
 ---
-- name: restart neo4j server
-  sudo: yes
-  sudo_user: "{{neo4j_user}}"
-  command: nohup ./neo4j restart
-  ignore_errors: True
-  args:
-    chdir: "{{neo4j_path}}/neo4j-community-{{neo4j_version}}/bin"

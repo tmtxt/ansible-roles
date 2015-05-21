@@ -75,8 +75,6 @@
   register: neo4j_server_status
   changed_when: neo4j_server_status.stdout.find('Neo4j Server is not running') != -1
   ignore_errors: True
-  notify:
-    - restart neo4j server
 
 - name: generate config file for neo4j
   sudo: yes
@@ -84,8 +82,16 @@
   template: >-
     src=neo4j-server.properties
     dest={{neo4j_path}}/neo4j-community-{{neo4j_version}}/conf/neo4j-server.properties
-  notify:
-    - restart neo4j server
+  register: neo4j_config_file
+
+- name: restart neo4j server
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  command: nohup ./neo4j restart
+  ignore_errors: True
+  args:
+    chdir: "{{neo4j_path}}/neo4j-community-{{neo4j_version}}/bin"
+  when: neo4j_server_status.changed or neo4j_config_file.changed
 
 - name: generate base64 string for default password
   shell: echo -n "neo4j:123456" | base64
