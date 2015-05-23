@@ -94,6 +94,11 @@
   when: neo4j_server_status.changed or neo4j_config_file.changed
 
 - name: generate base64 string for default password
-  shell: echo -n "neo4j:123456" | base64
+  shell: echo -n "neo4j:neo4j" | base64
   register: neo4j_default_password
   changed_when: False
+
+- name: change neo4j password
+  raw: "curl -H \"Authorization: Basic {{neo4j_default_password.stdout}}\" -H \"Accept: application/json; charset=UTF-8\" -H \"Content-Type: application/json\" -X POST -d '{\"password\":\"{{neo4j_password}}\" }' http://localhost:{{neo4j_port}}/user/neo4j/password"
+  register: neo4j_change_password
+  changed_when: neo4j_change_password.stdout.find('Invalid username or password') != -1
