@@ -106,12 +106,20 @@
   when: not neo4j_password_stat.stat.exists
   shell: date | md5sum | head -c 32 > {{neo4j_password_file}}
 
+- name: register neo4j password
+  sudo: yes
+  sudo_user: "{{neo4j_user}}"
+  when: not neo4j_password_stat.stat.exists
+  command: cat {{neo4j_password_file}}
+  register: neo4j_password_data
+  changed_when: False
+
 - name: generate base64 string for default password
   shell: echo -n "neo4j:neo4j" | base64
   register: neo4j_default_password
   changed_when: False
 
 - name: change neo4j password
-  command: "curl -H \"Authorization: Basic {{neo4j_default_password.stdout}}\" -H \"Accept: application/json; charset=UTF-8\" -H \"Content-Type: application/json\" -X POST -d '{\"password\":\"{{neo4j_password}}\" }' http://localhost:{{neo4j_port}}/user/neo4j/password"
+  command: "curl -H \"Authorization: Basic {{neo4j_default_password.stdout}}\" -H \"Accept: application/json; charset=UTF-8\" -H \"Content-Type: application/json\" -X POST -d '{\"password\":\"{{neo4j_password_data.stdout}}\" }' http://localhost:{{neo4j_port}}/user/neo4j/password"
   register: neo4j_change_password
   changed_when: neo4j_change_password.stdout.find('Invalid username or password') == -1
