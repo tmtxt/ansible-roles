@@ -3,7 +3,7 @@ nvm_user: "{{remote_user}}"
 nvm_node_version: '0.11.14'
 
 # auto install these tools
-nvm_install_node_apps: true
+nvm_install_node_apps: false
 nvm_node_apps:
   - bower
   - gulp
