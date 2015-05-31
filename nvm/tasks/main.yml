@@ -60,3 +60,11 @@
   command: bash -c '. ~/.nvm/nvm.sh; nvm alias default {{nvm_node_version}}'
   when: nvm_check_default|failed
   tags: nvm
+
+- name: install nodejs tools
+  sudo: yes
+  sudo_user: "{{nvm_user}}"
+  npm: name={{item}} executable=~/.nvm/v{{nvm_node_version}}/bin/npm global=yes
+  with_items:
+    - "{{nvm_node_apps}}"
+  when: nvm_install_node_apps and nvm_node_apps is defined
