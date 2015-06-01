@@ -5,4 +5,3 @@ neo4j_user: "{{remote_user}}"
 neo4j_port: 7474
 neo4j_https_enable: "false"
 neo4j_password: password
-neo4j_password_file: "{{neo4j_path}}/password"
