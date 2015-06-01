@@ -1,0 +1,5 @@
+---
+# tasks file for iptables
+- name: install and update iptables
+  sudo: yes
+  apt: name=iptables
