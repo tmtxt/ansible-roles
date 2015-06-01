@@ -119,8 +119,6 @@
     neo4j_password: "{{neo4j_password_data.stdout}}"
   when: neo4j_random_password
 
-- debug: msg={{neo4j_password}}
-
 - name: generate base64 string for default password
   shell: echo -n "neo4j:neo4j" | base64
   register: neo4j_default_password
