@@ -16,7 +16,7 @@ Note: this is a string to use in the template, not a boolean value
 
 There are two options for setting neo4j admin password.
 
-## Setting password manually
+## Set password manually
 
 This is the default option, you must pass the variable `neo4j_password` to the
 role in order to set the password
@@ -26,4 +26,5 @@ role in order to set the password
 To use this feature, you need to set the variable `neo4j_random_password` to
 `true`. Optionally, you can also set the variable `neo4j_password_file` to the
 where you want to generate a file containing the random password, default is
-`{{neo4j_path}}/password`.
+`{{neo4j_path}}/password`. The role will then set the variable `neo4j_password`
+back to you.
