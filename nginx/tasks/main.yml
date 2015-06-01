@@ -1,0 +1,4 @@
+---
+- name: install nginx
+  sudo: yes
+  apt: name=nginx
