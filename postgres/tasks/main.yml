@@ -27,6 +27,32 @@
   sudo_user: postgres
   postgresql_db: name={{db_name}}
 
+- name: check if pg password is generated already
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  stat: path={{pg_password_file}}
+  when: pg_random_password
+  register: pg_password_stat
+  changed_when: False
+
+- name: generate pg password
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  when: pg_random_password and not pg_password_stat.stat.exists
+  shell: date | md5sum | head -c 32 > {{pg_password_file}}
+
+- name: register pg password
+  sudo: yes
+  sudo_user: "{{db_user}}"
+  when: pg_random_password
+  command: cat {{pg_password_file}}
+  register: pg_password_data
+  changed_when: False
+
+- set_fact:
+    db_password: "{{pg_password_data.stdout}}"
+  when: pg_random_password
+
 - name: grant access to database for project user
   sudo: yes
   sudo_user: postgres

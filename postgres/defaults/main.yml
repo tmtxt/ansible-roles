@@ -3,7 +3,9 @@ postgres_version: 9.4
 
 db_name: "{{remote_user}}"
 db_user: "{{remote_user}}"
-db_password: example
 db_host: localhost
 
 script_dir: ~/scripts
+
+pg_random_password: false
+pg_password_file: ~/pg_password
