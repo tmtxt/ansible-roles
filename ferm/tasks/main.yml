@@ -1,2 +1,12 @@
 ---
 # tasks file for ferm
+- name: install ferm dependencies
+  sudo: yes
+  apt: name={{item}}
+  with_items:
+    - iptables
+    - ferm
+
+- name: add ferm config directory
+  sudo: yes
+  file: path=/etc/ferm owner=root group=root mode=0700 state=directory
