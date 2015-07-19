@@ -12,3 +12,5 @@
     path={{php5_fpm_log_dir}}
     state=directory
     mode=755
+  notify:
+    - restart php5-fpm
