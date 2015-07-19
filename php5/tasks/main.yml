@@ -1,0 +1,9 @@
+---
+- name: install php5 dependencies
+  sudo: yes
+  apt: name={{item}}
+  with_items:
+    - php5-cli
+    - php5-curl
+    - php5-intl
+    - php5-json
