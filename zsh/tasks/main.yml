@@ -3,3 +3,7 @@
 - name: install zsh
   sudo: yes
   apt: name=zsh
+
+- name: set zsh to default shell
+  sudo: yes
+  user: name={{zsh_user}} shell=/usr/bin/zsh
