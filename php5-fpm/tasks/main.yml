@@ -5,3 +5,10 @@
   with_items:
     - php5
     - php5-fpm
+
+- name: create php fpm log dir
+  sudo: yes
+  file: >-
+    path={{php5_fpm_log_dir}}
+    state=directory
+    mode=755
