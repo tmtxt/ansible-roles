@@ -1,7 +1,10 @@
 ---
 - name: install apache2
-  apt: name=apache2
+  apt: name={{item}}
   sudo: yes
+  with_items:
+    - apache2
+    - php5
 
 - name: enable mod_rewrite
   sudo: yes
