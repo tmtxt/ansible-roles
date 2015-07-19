@@ -8,3 +8,23 @@
   apache2_module: name=rewrite state=present
   notify:
     - restart apache2
+
+- name: change apache2 listen port
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/apache2/ports.conf
+    regexp="^Listen 80"
+    line="Listen {{apache2_port}}"
+    state=present
+  notify:
+    - restart apache2
+
+- name: change apache2 virtualhost port
+  sudo: yes
+  lineinfile: >-
+    dest=/etc/apache2/sites-available/000-default.conf
+    regexp="^<VirtualHost \*:80>"
+    line="<VirtualHost *:{{apache2_port}}>"
+    state=present
+  notify:
+    - restart apache2
