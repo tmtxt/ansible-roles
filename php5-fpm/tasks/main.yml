@@ -1,2 +1,7 @@
 ---
-# tasks file for php5-fpm
+- name: install php5-fpm packages
+  sudo: yes
+  apt: name={{item}}
+  with_items:
+    - php5
+    - php5-fpm
