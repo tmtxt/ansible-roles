@@ -21,3 +21,14 @@
     src=php.ini
     dest=/etc/php5/fpm/php.ini
     mode=644
+  notify:
+    - restart php5-fpm
+
+- name: add fpm pool config
+  sudo: yes
+  template: >-
+    src=www.conf
+    dest=/etc/php5/fpm/pool.d/www.conf
+    mode=644
+  notify:
+    - restart php5-fpm
