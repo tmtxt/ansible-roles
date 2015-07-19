@@ -1,4 +1,4 @@
 ---
 - name: create project user
-  user: name={{project_user}} shell=/bin/bash
+  user: name={{project_user}}
   sudo: yes

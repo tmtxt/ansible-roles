@@ -12,38 +12,3 @@
     repo=https://github.com/robbyrussell/oh-my-zsh.git
     dest=~/.oh-my-zsh
     update=no
-
-- name: set zsh to default shell
-  sudo: yes
-  user: name={{zsh_user}} shell=/usr/bin/zsh
-  when: zsh_set_default_shell
-
-- name: check if .zshrc is present
-  sudo: yes
-  sudo_user: "{{zsh_user}}"
-  stat: path=~/.zshrc
-  register: zsh_rc_file
-
-- name: create .zshrc file if not exist
-  when: not zsh_rc_file.stat.exists
-  file: path=~/.zshrc state=touch
-  sudo: yes
-  sudo_user: "{{zsh_user}}"
-
-- name: update $ZSH to oh my zsh
-  when: zsh_install_oh_my_zsh
-  sudo: yes
-  sudo_user: "{{zsh_user}}"
-  lineinfile: >-
-    dest=~/.zshrc
-    line="ZSH=$HOME/.oh-my-zsh"
-    follow=yes
-
-- name: source oh my zsh
-  when: zsh_install_oh_my_zsh
-  sudo: yes
-  sudo_user: "{{zsh_user}}"
-  lineinfile: >-
-    dest=~/.zshrc
-    line="source $ZSH/oh-my-zsh.sh"
-    follow=yes
