@@ -1,2 +1,4 @@
 ---
-# tasks file for apache2
+- name: install apache2
+  apt: name=apache2
+  sudo: yes
