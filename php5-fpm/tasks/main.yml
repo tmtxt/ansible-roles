@@ -14,3 +14,10 @@
     mode=755
   notify:
     - restart php5-fpm
+
+- name: add php.ini config
+  sudo: yes
+  template: >-
+    src=php.ini
+    dest=/etc/php5/fpm/php.ini
+    mode=644
