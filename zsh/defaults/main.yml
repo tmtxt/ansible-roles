@@ -1,4 +1,5 @@
 ---
 # defaults file for zsh
+zsh_install_oh_my_zsh: false
 zsh_set_default_shell: false
 zsh_user: "{{remote_user}}"

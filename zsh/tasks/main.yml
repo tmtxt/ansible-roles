@@ -4,6 +4,16 @@
   sudo: yes
   apt: name=zsh
 
+- name: install oh my zsh
+  when: zsh_install_oh_my_zsh
+  sudo: yes
+  sudo_user: "{{zsh_user}}"
+  git: >-
+    repo=https://github.com/robbyrussell/oh-my-zsh.git
+    dest=~/.oh-my-zsh
+    update=no
+
 - name: set zsh to default shell
   sudo: yes
   user: name={{zsh_user}} shell=/usr/bin/zsh
+  when: zsh_set_default_shell
