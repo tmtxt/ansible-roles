@@ -2,3 +2,9 @@
 - name: install apache2
   apt: name=apache2
   sudo: yes
+
+- name: enable mod_rewrite
+  sudo: yes
+  apache2_module: name=rewrite state=present
+  notify:
+    - restart apache2
