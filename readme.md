@@ -1,6 +1,10 @@
----
+> **I stopped developed this (because I think there is a better solution to**
+> **organize these roles)**
+
 # My collection of Ansible roles
----
+
+Read more about why I created this at my blog
+[Vagrant and Ansible - Organize for reusability](https://truongtx.me/2015/04/02/vagrant-and-ansible-organize-for-reusability/)
 
 # Usage
 
